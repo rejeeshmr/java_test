@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,9 +24,13 @@ public class SpringDemoApplication {
 @Component
 class BookingCommandLineRunner implements CommandLineRunner{
 
+	@Autowired BookingRepository repo; 
+	
 	@Override
 	public void run(String... arg0) throws Exception {
-		// TODO Auto-generated method stub
+		for(Booking b: repo.findAll()){
+			System.out.println(b.toString());
+		}
 		
 	}
 	
@@ -39,6 +44,11 @@ interface BookingRepository extends JpaRepository<Booking, Long>{
 @Entity
 class Booking{
 	
+	@Override
+	public String toString() {
+		return "Booking [bookingName=" + bookingName + "]";
+	}
+
 	@Id @GeneratedValue
 	Long id;
 	
