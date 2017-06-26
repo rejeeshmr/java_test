@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 public class SpringDemoApplication {
@@ -34,6 +36,17 @@ class BookingCommandLineRunner implements CommandLineRunner{
 		
 	}
 	
+}
+
+@RestController
+class BookingController{
+	
+	@Autowired BookingRepository repo;
+	
+	@RequestMapping("/bookings")
+	Collection<Booking> bookings(){
+		return repo.findAll();
+	}
 }
 
 interface BookingRepository extends JpaRepository<Booking, Long>{
